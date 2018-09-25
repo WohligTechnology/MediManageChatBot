@@ -34,7 +34,6 @@ var model = {
         });
     },
     getOnePolicy: function (data, callback) {
-        console.log("In Claims", data);
         var POLICY_NUMBER = parseInt(data.queryResult.parameters.POLICY_NUMBER);
         Claim.findOne({
             POLICY_NUMBER: POLICY_NUMBER

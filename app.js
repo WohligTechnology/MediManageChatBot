@@ -59,7 +59,6 @@ app.post('/', (req, res) => {
             }
         case "Amount":
             {
-                console.log("HI In Amount");
                 webhooks.amount(req.body, function (err, data) {
                     if (err) {
                         res.json({
