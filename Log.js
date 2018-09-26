@@ -139,7 +139,7 @@ var model = {
             if (err || _.isEmpty(resData)) {
                 callback(null, "Please provide one of the detail \nPolicy Number\nCompany Name and Employee ID\nGood Health Id\nClaim Id");
             } else {
-                callback(null, "Deductions are as follows:\nTotal Requested Amount : " + resData.TOTALAUTHREQUESTEDAMOUNT + "\nTotal Approved Amount : " + resData.TOTALAUTHAPPROVEDAMOUNT + "\nAmount Claimed : " + resData.AMOUNTCLAIMED + "\nAmount Deducted : " + resData.AMOUNTDEDUCTED + "\nAmount Approved : " + resData.TOTALAMOUNTAPPROVED + "\nAmount Settled : " + resData.SETTLEDAMOUNT);
+                callback(null, "Deductions are as follows:\nTotal Requested Amount : " + resData.TOTALAUTHREQUESTEDAMOUNT + "\nTotal Approved Amount : " + resData.TOTALAUTHAPPROVEDAMOUNT + "\nAmount Deducted : " + resData.AMOUNTDEDUCTED);
             }
         });
     },
