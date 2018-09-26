@@ -9,7 +9,7 @@ var schema = new Schema({
     DOD: Date,
     HOSPITAL_NAME: String,
     HOSPITAL_CITY: String,
-    CLAIMID: String,
+    CLAIMID: Number,
     EMPLOYEE_PHONE_NO: String,
     STATUS: String,
     INTIMATION_DATE: Date,
@@ -30,6 +30,22 @@ var model = {
                 callback(err, null)
             } else {
                 callback(null, data)
+            }
+        });
+    },
+    getOneClaim: function (data, callback) {
+        var CLAIMID = parseInt(data.queryResult.parameters.CLAIMID);
+        console.log("Claim Id", CLAIMID);
+        Claim.findOne({
+            CLAIMID: CLAIMID
+        }).lean().exec(function (err, resData) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(resData)) {
+                callback("Please provide valid Claim ID", null);
+            } else {
+                resData.session = data.session;
+                callback(null, resData);
             }
         });
     },

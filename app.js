@@ -41,6 +41,23 @@ app.post('/', (req, res) => {
                 });
                 break;
             }
+        case "Claim Id":
+            {
+                webhooks.claimNumber(req.body, function (err, data) {
+                    if (err) {
+                        console.log("err-->", err);
+                        res.json({
+                            "fulfillmentText": err,
+                        });
+                    } else {
+                        console.log("Data", data);
+                        res.json({
+                            "fulfillmentText": data,
+                        });
+                    }
+                });
+                break;
+            }
         case "Status":
             {
                 webhooks.status(req.body, function (err, data) {
@@ -60,6 +77,22 @@ app.post('/', (req, res) => {
         case "Amount":
             {
                 webhooks.amount(req.body, function (err, data) {
+                    if (err) {
+                        res.json({
+                            "fulfillmentText": "There was some error from the system. Please notify the developers",
+                        });
+                    } else {
+                        console.log("Data", data);
+                        res.json({
+                            "fulfillmentText": data,
+                        });
+                    }
+                });
+                break;
+            }
+        case "SingleAmount":
+            {
+                webhooks.getSingleAmount(req.body, function (err, data) {
                     if (err) {
                         res.json({
                             "fulfillmentText": "There was some error from the system. Please notify the developers",
