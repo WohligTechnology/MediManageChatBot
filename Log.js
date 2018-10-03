@@ -279,7 +279,7 @@ var model = {
             resData.PROFESSIONALFEES_REQ +
             "\nInvestigation Charges : " +
             resData.INVESTIGATION_CHARGES_REQ +
-            "\n Pharmacy Charges" +
+            "\n Pharmacy Charges : " +
             resData.PHARMACY_CHARGES_REQ +
             "\nOT Charges : " +
             resData.OT_CHARGES_REQ +
