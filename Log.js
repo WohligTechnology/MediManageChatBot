@@ -123,11 +123,15 @@ var model = {
             }
           },
           function(err, data2) {
-            var data = _.assign(data2.getBreakup, data2.getClaim);
-            var log = new Log(data);
-            log.save(function(err, res) {
-              callback(err, res);
-            });
+            if (err) {
+              callback(err, null);
+            } else {
+              var data = _.assign(data2.getBreakup, data2.getClaim);
+              var log = new Log(data);
+              log.save(function(err, res) {
+                callback(err, res);
+              });
+            }
           }
         );
       } else {
@@ -159,17 +163,21 @@ var model = {
                 }
               },
               function(err, data2) {
-                var data3 = _.assign(data2.getBreakup, data2.getClaim);
-                Log.remove({
-                  session: data.session
-                })
-                  .lean()
-                  .exec(function(err, resData2) {
-                    var log = new Log(data3);
-                    log.save(function(err, res) {
-                      callback(err, res);
+                if (err) {
+                  callback(err, null);
+                } else {
+                  var data3 = _.assign(data2.getBreakup, data2.getClaim);
+                  Log.remove({
+                    session: data.session
+                  })
+                    .lean()
+                    .exec(function(err, resData2) {
+                      var log = new Log(data3);
+                      log.save(function(err, res) {
+                        callback(err, res);
+                      });
                     });
-                  });
+                }
               }
             );
           }
