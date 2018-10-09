@@ -28,6 +28,9 @@ module.exports = {
   claimBreakup: function(body, callback) {
     Log.claimBreakup(body, callback);
   },
+  query: function(body, callback) {
+    Log.query(body, callback);
+  },
   status: function(body, callback) {
     Log.policyStatus(body, function(err, res) {
       callback(null, res);

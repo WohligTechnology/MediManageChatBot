@@ -340,6 +340,25 @@ var model = {
         );
       }
     });
+  },
+  query: function(data, callback) {
+    Log.findOne({
+      session: data.session
+    }).exec(function(err, resData) {
+      if (err || _.isEmpty(resData)) {
+        callback(null, "Please  provide Claim Id");
+      } else {
+        callback(
+          null,
+          "Query details are as follows:\nQUERIED DATE : " +
+            resData.QUERIED_DATE +
+            "\nQuery_Received date : " +
+            resData.QUERY_RECEIVED_DATE +
+            "\nRemark : " +
+            resData.QUERY_REMARKS
+        );
+      }
+    });
   }
 };
 module.exports = _.assign(model);
