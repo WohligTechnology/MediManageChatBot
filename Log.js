@@ -36,10 +36,14 @@ var schema = new Schema({
   INV_DED_REMARKS: String,
   PHARMACY_DED_REMARKS: String,
   OT_DED_REMARKS: String,
-  OTHERS_DED_REMARKS: String
+  OTHERS_DED_REMARKS: String,
+  QUERIED_DATE: String,
+  QUERY_RECEIVED_DATE: String,
+  QUERY_REMARKS: String
 });
 var Claim = require("./Claim");
 var Breakup = require("./Breakup");
+var Query = require("./Query");
 var Log = mongoose.model("Log", schema);
 var model = {
   policyNumber: function(data, callback) {
@@ -120,13 +124,27 @@ var model = {
                   callback(err, data);
                 }
               });
+            },
+            getQuery: function(callback) {
+              Query.getOneQuery(data, function(err, data) {
+                if (err) {
+                  callback(err, null);
+                } else {
+                  delete data._id;
+                  callback(err, data);
+                }
+              });
             }
           },
           function(err, data2) {
             if (err) {
               callback(err, null);
             } else {
-              var data = _.assign(data2.getBreakup, data2.getClaim);
+              var data = _.assign(
+                data2.getBreakup,
+                data2.getClaim,
+                data2.getQuery
+              );
               var log = new Log(data);
               log.save(function(err, res) {
                 callback(err, res);
@@ -160,13 +178,27 @@ var model = {
                       callback(err, data);
                     }
                   });
+                },
+                getQuery: function(callback) {
+                  Query.getOneQuery(data, function(err, data) {
+                    if (err) {
+                      callback(err, null);
+                    } else {
+                      delete data._id;
+                      callback(err, data);
+                    }
+                  });
                 }
               },
               function(err, data2) {
                 if (err) {
                   callback(err, null);
                 } else {
-                  var data3 = _.assign(data2.getBreakup, data2.getClaim);
+                  var data3 = _.assign(
+                    data2.getBreakup,
+                    data2.getClaim,
+                    data2.getQuery
+                  );
                   Log.remove({
                     session: data.session
                   })
