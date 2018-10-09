@@ -5,7 +5,7 @@ module.exports = {
       if (err) {
         callback(err, null);
       } else {
-        callback(null, "Hi " + res.EMPLOYEE_NAME + ", how can I help you?");
+        callback(null, "Hi " + res.CLAIMANT_NAME + ", how can I help you?");
       }
     });
   },
@@ -17,7 +17,7 @@ module.exports = {
         callback(
           null,
           "Hi " +
-            res.EMPLOYEE_NAME +
+            res.CLAIMANT_NAME +
             " your claim status is " +
             res.STATUS +
             ", how can I help you?"
