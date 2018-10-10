@@ -31,6 +31,9 @@ module.exports = {
   query: function(body, callback) {
     Log.query(body, callback);
   },
+  remark: function(body, callback) {
+    Log.remark(body, callback);
+  },
   status: function(body, callback) {
     Log.policyStatus(body, function(err, res) {
       callback(null, res);

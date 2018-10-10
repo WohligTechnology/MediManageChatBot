@@ -128,15 +128,26 @@ app.post("/", (req, res) => {
       break;
     }
     case "Query": {
-      console.log("hi in here");
       webhooks.query(req.body, function(err, data) {
         if (err) {
-          console.log("err-->", err);
           res.json({
             fulfillmentText: err
           });
         } else {
-          console.log("Data", data);
+          res.json({
+            fulfillmentText: data
+          });
+        }
+      });
+      break;
+    }
+    case "Remark": {
+      webhooks.remark(req.body, function(err, data) {
+        if (err) {
+          res.json({
+            fulfillmentText: err
+          });
+        } else {
           res.json({
             fulfillmentText: data
           });

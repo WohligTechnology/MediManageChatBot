@@ -128,6 +128,7 @@ var model = {
             getQuery: function(callback) {
               Query.getOneQuery(data, function(err, data) {
                 if (err) {
+                  console.log("In Here For Error");
                   callback(err, null);
                 } else {
                   delete data._id;
@@ -137,9 +138,14 @@ var model = {
             }
           },
           function(err, data2) {
-            if (err) {
+            if (
+              _.isEmpty(data2.getBreakup) &&
+              _.isEmpty(data2.getClaim) &&
+              _.isEmpty(data2.getQuery)
+            ) {
               callback(err, null);
             } else {
+              // console.log("Data 2-->", data2);
               var data = _.assign(
                 data2.getBreakup,
                 data2.getClaim,
@@ -348,6 +354,15 @@ var model = {
       if (err || _.isEmpty(resData)) {
         callback(null, "Please  provide Claim Id");
       } else {
+        resData.QUERIED_DATE = resData.QUERIED_DATE
+          ? resData.QUERIED_DATE
+          : "NA";
+        resData.QUERY_RECEIVED_DATE = resData.QUERY_RECEIVED_DATE
+          ? resData.QUERY_RECEIVED_DATE
+          : "NA";
+        resData.QUERY_REMARKS = resData.QUERY_REMARKS
+          ? resData.QUERY_REMARKS
+          : "NA";
         callback(
           null,
           "Query details are as follows:\nQUERIED DATE : " +
@@ -356,6 +371,49 @@ var model = {
             resData.QUERY_RECEIVED_DATE +
             "\nRemark : " +
             resData.QUERY_REMARKS
+        );
+      }
+    });
+  },
+  remark: function(data, callback) {
+    Log.findOne({
+      session: data.session
+    }).exec(function(err, resData) {
+      if (err || _.isEmpty(resData)) {
+        callback(null, "Please provide Claim Id");
+      } else {
+        resData.ROOMRENT_DED_REMARKS = resData.ROOMRENT_DED_REMARKS
+          ? resData.ROOMRENT_DED_REMARKS
+          : "NA";
+        resData.PFEES_DED_REMARKS = resData.PFEES_DED_REMARKS
+          ? resData.PFEES_DED_REMARKS
+          : "NA";
+        resData.INV_DED_REMARKS = resData.INV_DED_REMARKS
+          ? resData.INV_DED_REMARKS
+          : "NA";
+        resData.PHARMACY_DED_REMARKS = resData.PHARMACY_DED_REMARKS
+          ? resData.PHARMACY_DED_REMARKS
+          : "NA";
+        resData.OT_DED_REMARKS = resData.OT_DED_REMARKS
+          ? resData.OT_DED_REMARKS
+          : "NA";
+        resData.OTHERS_DED_REMARKS = resData.OTHERS_DED_REMARKS
+          ? resData.OTHERS_DED_REMARKS
+          : "NA";
+        callback(
+          null,
+          "Remarks are as follows:\nROOMRENT DEDUCTION REMARKS : " +
+            resData.ROOMRENT_DED_REMARKS +
+            "\nPFEES DEDUCTION REMARKS : " +
+            resData.PFEES_DED_REMARKS +
+            "\nINVOICE DEDUCTION REMARKS : " +
+            resData.INV_DED_REMARKS +
+            "PHARMACY DEDUCTION REMARKS : " +
+            resData.PHARMACY_DED_REMARKS +
+            "\nOT DEDUCTION REMARKS : " +
+            resData.OT_DED_REMARKS +
+            "\nOTHERS DEDUCTION REMARKS : " +
+            resData.OTHERS_DED_REMARKS
         );
       }
     });
